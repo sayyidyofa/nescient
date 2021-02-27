@@ -1,0 +1,9 @@
+{
+  "name": "nescient",
+  "version": "1.0.0",
+  "description": "Near-realtime DoS detection with Netflow and Entropy",
+  "main": "main.ts",
+  "repository": "https://github.com/sayyidyofa/nescient",
+  "author": "sayyidyofa@gmail.com",
+  "license": "MIT"
+}
