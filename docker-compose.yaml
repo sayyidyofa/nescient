@@ -1,0 +1,14 @@
+version: '3.7'
+services:
+
+  mongo:
+    image: mongo:4.4.4-bionic
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: dataset
+      MONGO_INITDB_ROOT_USERNAME: username
+      MONGO_INITDB_ROOT_PASSWORD: password
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./.docker/mongo:/data/db
