@@ -97,6 +97,8 @@ const ElasticNetflowSchema = new Schema({
         tags: [String]
     },
     _type: String
+}, {
+    collection: "gns"
 });
 
 export default model<IElasticNetflow>('ElasticNetflowModel', ElasticNetflowSchema);
