@@ -11,6 +11,7 @@
     "lint": "yarn run eslint . --ext .ts",
     "start": "node dist/main.js",
     "build": "babel ./src --out-dir dist --extensions '.ts' --source-maps inline",
+    "once":  "yarn run build && yarn run start",
     "dev": "yarn run nodemon src/main.ts"
   },
   "devDependencies": {
