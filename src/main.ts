@@ -1,27 +1,19 @@
-import mongoose from "mongoose";
-import ElasticNetflowModel from "./models/ElasticNetflow";
-import IElasticNetflow from "./models/interfaces/IElasticNetflow";
+import { createSocket } from "dgram";
 
-const MONGODB_URL = process.env.MONGODB_URL || "mongodb://username:password@127.0.0.1:27017/dataset?authSource=admin";
+const netflowListener = createSocket("udp4");
 
-mongoose
-    .connect(MONGODB_URL, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useFindAndModify: true,
-        useCreateIndex: true
-    })
-    .then(() => console.log('Connected to MongoDB'))
-    .catch(err => {
-        console.log('Failed when connecting to MongoDB')
-        console.warn(err)
-    })
+netflowListener.on("error", err => {
+    console.log(err);
+    netflowListener.close();
+});
 
-ElasticNetflowModel.find().limit(100).then(flows => {
-    let packets = 0;
-    flows.forEach((flow, idx) => {
-        console.log(`[${idx}] ${flow._source.network.packets} packets`);
-        packets = Number.isNaN(flow._source.network.packets) && flow._source.network.packets === undefined ? packets : packets + flow._source.network.packets
-    });
-    console.log(packets);
-}).catch(console.log).finally(process.exit)
+netflowListener.on("message", (msg, rinfo) => {
+    console.log(`server got: ${msg} from ${rinfo.address}:${rinfo.port}`);
+});
+
+netflowListener.on("listening", () => {
+    const address = netflowListener.address();
+    console.log(`server is listening at ${address.address}:${address.port}`);
+});
+
+netflowListener.bind(2055);
