@@ -8,10 +8,11 @@
   "license": "MIT",
   "scripts": {
     "check-types": "yarn run tsc",
-    "lint": "yarn run eslint . --ext .ts",
+    "lint": "yarn run eslint ./src --ext .ts",
     "start": "node dist/main.js",
-    "build": "babel ./src --out-dir dist --extensions '.ts' --source-maps inline",
-    "once":  "yarn run build && yarn run start",
+    "babel.build": "babel ./src --out-dir dist --extensions '.ts' --source-maps inline",
+    "tsc.build": "tsc -p tsconfig.json",
+    "once": "yarn run build && yarn run start",
     "dev": "yarn run nodemon src/main.ts"
   },
   "devDependencies": {
@@ -34,7 +35,8 @@
   "dependencies": {
     "@babel/runtime": "^7.13.8",
     "@types/node": "^14.14.31",
-    "dotenv": "^8.2.0",
-    "mongoose": "^5.11.18"
+    "babel-plugin-inline-dotenv": "^1.6.0",
+    "mongoose": "^5.11.18",
+    "zebras": "^0.0.19"
   }
 }
